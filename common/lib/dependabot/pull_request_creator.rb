@@ -169,7 +169,7 @@ module Dependabot
           source: source,
           dependencies: dependencies,
           files: files,
-          credentials: gh_credentials,
+          credentials: credentials,
           commit_message_options: commit_message_options,
           pr_message_header: pr_message_header,
           pr_message_footer: pr_message_footer,
