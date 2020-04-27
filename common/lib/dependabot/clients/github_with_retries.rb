@@ -40,7 +40,15 @@ module Dependabot
       end
 
       def self.for_github_dot_com(credentials:)
-        access_tokens =  ENV["GITHUB_ACCESS_TOKEN"]
+        access_tokens =
+          [
+            {
+              "type" => "git_source",
+              "host" => "github.com",
+              "username" => "x-access-token",
+              "password" => ENV["GITHUB_ACCESS_TOKEN"],
+            }
+          ]
         new(access_tokens: access_tokens)
       end
 
