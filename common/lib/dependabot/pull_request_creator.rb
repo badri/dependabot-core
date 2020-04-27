@@ -23,7 +23,7 @@ module Dependabot
                 :commit_message_options, :vulnerabilities_fixed,
                 :reviewers, :assignees, :milestone, :branch_name_separator,
                 :branch_name_prefix, :github_redirection_service,
-                :custom_headers
+                :custom_headers, :gh_credentials
 
     def initialize(source:, base_commit:, dependencies:, files:, credentials:,
                    pr_message_header: nil, pr_message_footer: nil,
@@ -33,12 +33,13 @@ module Dependabot
                    branch_name_separator: "/", branch_name_prefix: "dependabot",
                    label_language: false, automerge_candidate: false,
                    github_redirection_service: "github-redirect.dependabot.com",
-                   custom_headers: nil, require_up_to_date_base: false)
+                   custom_headers: nil, require_up_to_date_base: false, gh_credentials: nil)
       @dependencies               = dependencies
       @source                     = source
       @base_commit                = base_commit
       @files                      = files
       @credentials                = credentials
+      @gh_credentials             = gh_credentials
       @pr_message_header          = pr_message_header
       @pr_message_footer          = pr_message_footer
       @author_details             = author_details
@@ -168,7 +169,7 @@ module Dependabot
           source: source,
           dependencies: dependencies,
           files: files,
-          credentials: credentials,
+          credentials: gh_credentials,
           commit_message_options: commit_message_options,
           pr_message_header: pr_message_header,
           pr_message_footer: pr_message_footer,
