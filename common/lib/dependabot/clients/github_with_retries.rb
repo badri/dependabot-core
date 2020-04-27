@@ -40,15 +40,19 @@ module Dependabot
       end
 
       def self.for_github_dot_com(credentials:)
+        credentials << {
+            "type" => "git_source",
+            "host" => "github.com",
+            "username" => "x-access-token",
+            "password" => ENV["GITHUB_ACCESS_TOKEN"] # A GitHub access token with read access to public repos
+        }
         access_tokens =
-          [
-            {
-              "type" => "git_source",
-              "host" => "github.com",
-              "username" => "x-access-token",
-              "password" => ENV["GITHUB_ACCESS_TOKEN"],
-            }
-          ]
+          credentials.
+          select { |cred| cred["type"] == "git_source" }.
+          select { |cred| cred["host"] == "github.com" }.
+          select { |cred| cred["password"] }.
+          map { |cred| cred.fetch("password") }
+
         new(access_tokens: access_tokens)
       end
 
